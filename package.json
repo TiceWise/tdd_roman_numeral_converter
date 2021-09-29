@@ -1,0 +1,22 @@
+{
+  "name": "tdd_roman_numeral_converter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiceWise/tdd_roman_numeral_converter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TiceWise/tdd_roman_numeral_converter/issues"
+  },
+  "homepage": "https://github.com/TiceWise/tdd_roman_numeral_converter#readme",
+  "dependencies": {
+    "jest": "^27.1.1"
+  }
+}
