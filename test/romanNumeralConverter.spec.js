@@ -1,4 +1,4 @@
-const convertToRomanNumber = require('../convertToRomanNumber')
+const functs = require('../convertToRomanNumber')
 
 describe('Roman Number Converter', () => {
     it.each`
@@ -28,7 +28,18 @@ describe('Roman Number Converter', () => {
     ${1900} | ${'MCM'}
     ${3999} | ${'MMMCMXCIX'}
     `('converts $number to $expected', ({number, expected}) => {
-        expect(convertToRomanNumber(number)).toBe(expected)
+        expect(functs.convertToRomanNumber(number)).toBe(expected)
     })
 
+    it.each`
+    number | expected
+    ${1} | ${1}
+    ${9} | ${9}
+    ${10} | ${1}
+    ${99} | ${9}
+    ${239482} | ${2}
+    ${98239} | ${9}
+    `('returns first digit of a number', ({number, expected}) => {
+        expect(functs.firstDigit(number)).toBe(expected)
+    })
 })

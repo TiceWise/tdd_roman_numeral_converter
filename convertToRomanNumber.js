@@ -1,28 +1,61 @@
-function romanNumeralConverter({remainder, numeral}, higherNumber, lowerNumber, higherNumeral, lowerNumeral) {
+const NUMBER_NUMERAL_PAIRS = new Map([
+    [1000, 'M'],
+    [500, 'D'],
+    [100, 'C'],
+    [50, 'L'],
+    [10, 'X'],
+    [5, 'V'],
+    [1, 'I'],
+    [0, '']
+]);
+
+function romanNumeralConverter({remainder, numeral}, higherNumber) {
+    if (higherNumber === 0) {
+        return {remainder, numeral}
+    }
+
+    let lowerNumber
+    if (higherNumber === 1) {
+        lowerNumber = 0
+    } else if (firstDigit(higherNumber)===1) {
+        lowerNumber = higherNumber / 10
+    } else if (firstDigit(higherNumber)===5) {
+        lowerNumber = higherNumber / 5
+    }
+
     while (remainder >= higherNumber) {
-        numeral = numeral.concat(higherNumeral);
+        numeral = numeral.concat(NUMBER_NUMERAL_PAIRS.get(higherNumber));
         remainder -= higherNumber;
     }
     if (remainder >= higherNumber - lowerNumber) {
-        numeral = numeral.concat(lowerNumeral + higherNumeral);
+        numeral = numeral.concat(NUMBER_NUMERAL_PAIRS.get(lowerNumber) + NUMBER_NUMERAL_PAIRS.get(higherNumber));
         remainder -= (higherNumber - lowerNumber);
     }
     return {remainder, numeral};
+}
+
+function firstDigit(number) {
+    let first = number
+    while(first >= 10)
+    {
+        first = Math.floor(first / 10);
+    }
+    return first
 }
 
 function convertToRomanNumber(number) {
     let numeral = '';
     let remainder = number;
     let remNumTup = {remainder, numeral};
-    remNumTup = romanNumeralConverter(remNumTup, 1000, 100, "M", "C");
-    remNumTup = romanNumeralConverter(remNumTup, 500, 100, "D", "C");
-    remNumTup = romanNumeralConverter(remNumTup, 100, 10, "C", "X");
-    remNumTup = romanNumeralConverter(remNumTup, 50, 10, "L", "X");
-    remNumTup = romanNumeralConverter(remNumTup, 10, 1, "X", "I");
-    remNumTup = romanNumeralConverter(remNumTup, 5, 1, "V", "I");
-    remNumTup = romanNumeralConverter(remNumTup, 1, 0, "I", "");
+
+    for (let key of NUMBER_NUMERAL_PAIRS.keys()) {
+        remNumTup = romanNumeralConverter(remNumTup, key);
+    }
 
     return remNumTup.numeral;
 }
 
-module.exports = convertToRomanNumber
+module.exports = {
+    convertToRomanNumber,
+    firstDigit
+}
