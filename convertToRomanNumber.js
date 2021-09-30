@@ -10,10 +10,6 @@ const NUMBER_NUMERAL_PAIRS = new Map([
 ]);
 
 function romanNumeralConverter({remainder, numeral}, higherNumber) {
-    if (higherNumber === 0) {
-        return {remainder, numeral}
-    }
-
     let lowerNumber
     if (higherNumber === 1) {
         lowerNumber = 0
@@ -23,7 +19,7 @@ function romanNumeralConverter({remainder, numeral}, higherNumber) {
         lowerNumber = higherNumber / 5
     }
 
-    while (remainder >= higherNumber) {
+    while (remainder >= higherNumber && higherNumber !== 0) {
         numeral = numeral.concat(NUMBER_NUMERAL_PAIRS.get(higherNumber));
         remainder -= higherNumber;
     }
@@ -44,9 +40,7 @@ function firstDigit(number) {
 }
 
 function convertToRomanNumber(number) {
-    let numeral = '';
-    let remainder = number;
-    let remNumTup = {remainder, numeral};
+    let remNumTup = {remainder: number, numeral: ''};
 
     for (let key of NUMBER_NUMERAL_PAIRS.keys()) {
         remNumTup = romanNumeralConverter(remNumTup, key);
